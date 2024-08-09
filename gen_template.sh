@@ -43,6 +43,7 @@ EOF
 
 cat <<EOF > "api/routes/"$PROJECT_DIR".js"
 const express = require("express");
+const authorization = require('../../middleware/authorize');
 const router = express.Router();
 
 const CONFIG = require("../../env.config");
@@ -50,6 +51,10 @@ const CONFIG = require("../../env.config");
 router.use(express.json());
 
 router.get("/test", (req, res) => {
+  res.status(200).send({message: "ok"});
+});
+
+router.post("/test", authorization.validate, (req, res) => {
   res.status(200).send({message: "ok"});
 });
 
