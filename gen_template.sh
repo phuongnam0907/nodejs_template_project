@@ -460,8 +460,11 @@ echo "package-lock.json" >> .gitignore
 npm init -y
 npm i body-parser cors ejs express morgan response-time --save
 npm i --save-dev nodemon
-npm pkg set 'scripts.dev'="nodemon ${PROJECT_DIR}.js"
+npm pkg set 'scripts.dev'="nodemon ${PROJECT_DIR}.js --ignore data/*"
 npm pkg set 'scripts.start'="node ${PROJECT_DIR}.js"
+
+git add .
+echo "data/" >> .gitignore
 
 git add .
 git commit -m "auto generate template code"
