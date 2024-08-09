@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [ -f "env.config" ]; then
+  echo "Template is generated already!!"
   exit 0;
 fi
 
