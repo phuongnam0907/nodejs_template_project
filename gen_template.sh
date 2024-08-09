@@ -10,6 +10,7 @@ PROJECT_DIR="$(basename $PWD)"
 mkdir "data"
 mkdir "utils"
 mkdir "views"
+mkdir "middleware"
 mkdir -p "api/routes"
 
 touch "api/routes/"$PROJECT_DIR".js"
@@ -17,6 +18,7 @@ touch "api/router.js"
 touch "data/data.json"
 touch "utils/functions.js"
 touch "views/404.ejs"
+touch "middleware/authorize.js"
 touch "env.config"
 touch $PROJECT_DIR".js"
 
@@ -24,6 +26,20 @@ upper_str=$(echo "$PROJECT_DIR" | awk '{ print toupper($0) }')
 no_under_str=$(echo "${PROJECT_DIR//_}")
 first_upper_str=$(echo ${PROJECT_DIR^})
 replace_under_str=$(echo "${first_upper_str/_/\ }")
+
+cat <<EOF > "middleware/authorize.js"
+const CONFIG = require("../env.config");
+
+function validate(req, res, next) {
+  if (req.query.user || req.body.user) {
+    next();
+  } else {
+    res.status(403).json({ message: 'Access denied' });
+  }
+}
+
+module.exports = { validate };
+EOF
 
 cat <<EOF > "api/routes/"$PROJECT_DIR".js"
 const express = require("express");
