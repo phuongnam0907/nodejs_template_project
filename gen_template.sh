@@ -451,7 +451,8 @@ app.listen(CONFIG.port, () => {
 });
 EOF
 
-sed -i 's/CONFIG_port/\$\{CONFIG.port\}/g' $PROJECT_DIR".js"
+editor=$(sed 's/CONFIG_port/\$\{CONFIG.port\}/g' $PROJECT_DIR".js")
+echo $editor > $PROJECT_DIR".js"
 
 echo "" >> .gitignore
 echo "# From Le Phuong Nam" >> .gitignore
