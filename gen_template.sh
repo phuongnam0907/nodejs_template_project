@@ -24,8 +24,8 @@ touch $PROJECT_DIR".js"
 
 upper_str=$(echo "$PROJECT_DIR" | awk '{ print toupper($0) }')
 no_under_str=$(echo "${PROJECT_DIR//_}")
-first_upper_str=$(echo ${PROJECT_DIR^})
-replace_under_str=$(echo "${first_upper_str/_/\ }")
+first_upper_str=$(echo "$PROJECT_DIR" | tr '[a-z]' '[A-Z]')
+replace_under_str=$(echo "${first_upper_str/_/ }")
 
 cat <<EOF > "middleware/authorize.js"
 const CONFIG = require("../env.config");
